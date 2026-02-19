@@ -79,7 +79,7 @@
 
             <!-- About -->
             <li>
-                <a href="{{ route('about') }}"
+                <a href="3"
                    class="flex items-center px-6 py-3 transition-colors
                    {{ request()->routeIs('about') ? 'bg-blue-600 border-l-4 border-blue-400' : 'text-gray-300 hover:bg-[#2b2b40] hover:text-white' }}">
                    

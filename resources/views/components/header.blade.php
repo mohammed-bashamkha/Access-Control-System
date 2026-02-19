@@ -29,7 +29,7 @@
             alt="User"
             class="w-10 h-10 rounded-full ml-3 object-cover">
             <div class="text-right ml-3">
-                <p class="text-sm font-medium text-gray-700"><a href="{{ route('account.show') }}">{{ Auth::user()->name }}</a></p>
+                <p class="text-sm font-medium text-gray-700"><a href="#">{{ Auth::user()->name }}</a></p>
                 <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
             </div>
             <form action="{{ route('logout') }}" method="POST" class="inline">
