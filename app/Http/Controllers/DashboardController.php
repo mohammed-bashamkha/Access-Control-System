@@ -15,7 +15,7 @@ class DashboardController extends Controller
       'totalUsers' => User::count(),
       'totalRoles' => Role::count(),
       'totalPermissions' => Permission::count(),
-      'totalAdmins' => Permission::where('name', 'admin')->first()->users()->count(),
+      'totalAdmins' => Permission::where('name', 'admin')->count(),
       'recentUsers' => User::latest()->take(5)->get(),
       ]);
     }
