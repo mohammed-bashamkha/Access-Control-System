@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::delete('/permissions/{permission}',[PermissionController::class,'destroy'])->name('permissions.destroy');
     Route::resource('permissions', PermissionController::class)->except(['show']);
     // Users Routes
-    Route::get('/users',[UserController::class,'index'])->name('users.index');
+    Route::resource('/users',UserController::class)->except('show');
     // Roles Routes
     Route::resource('roles', RoleController::class)->except(['show']);
     Route::post('/logout',[UserController::class,'logout'])->name('logout');
