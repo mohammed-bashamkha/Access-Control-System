@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-
+  use AuthorizesRequests;
   public function index()
   {
+    $this->authorize('viewAny', User::class);
     $users = User::with('roles')->paginate(5);
     return view('users.index',compact('users'));
   }
@@ -19,11 +21,13 @@ class UserController extends Controller
   public function create()
   {
     $roles = Role::all();
+    $this->authorize('create', User::class);
     return view('users.create',compact('roles'));
   }
 
   public function store(Request $request)
   {
+    $this->authorize('create', User::class);
     $validate = $request->validate([
       'name' => 'required|string|max:255',
       'email' => 'required|email|unique:users,email',
@@ -48,6 +52,7 @@ class UserController extends Controller
   public function edit(User $user)
   {
     $roles = Role::all();
+    $this->authorize('update', $user);
     return view('users.edit', compact('user', 'roles'));
   }
 
@@ -60,6 +65,7 @@ class UserController extends Controller
       'roles' => 'array|nullable',
       'roles.*' => 'string|exists:roles,name'
     ]);
+    $this->authorize('update', $user);
     $user->update([
       'name' => $validate['name'],
       'email' => $validate['email']
@@ -77,6 +83,7 @@ class UserController extends Controller
 
   public function destroy(User $user)
   {
+    $this->authorize('delete', $user);
     $user->delete();
     return redirect()->route('users.index')->with('success', 'تم حذف المستخدم بنجاح.');
   }

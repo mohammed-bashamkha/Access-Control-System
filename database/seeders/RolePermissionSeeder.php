@@ -15,15 +15,18 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'task.view_all',
-            'task.view_own',
-            'task.create',
-            'task.update',
-            'task.delete',
-            'task.assign',
-            'category.manage',
-            'category.add_task_to_category',
-            'user.manage',
+            'المستخدمين.عرض_الكل',
+            'المستخدمين.إنشاء',
+            'المستخدمين.تحديث',
+            'المستخدمين.حذف',
+            'الصلاحيات.عرض_الكل',
+            'الصلاحيات.إنشاء',
+            'الصلاحيات.تحديث',
+            'الصلاحيات.حذف',
+            'الأدوار.عرض_الكل',
+            'الأدوار.إنشاء',
+            'الأدوار.تحديث',
+            'الأدوار.حذف',
         ];
 
         foreach ($permissions as $permission) {
@@ -31,21 +34,7 @@ class RolePermissionSeeder extends Seeder
         }
 
         $admin = Role::firstOrCreate(['name' => 'admin']);
-        $manager = Role::firstOrCreate(['name' => 'manager']);
-        $user = Role::firstOrCreate(['name' => 'user']);
 
         $admin->givePermissionTo(Permission::all());
-
-        $manager->givePermissionTo([
-            'task.view_all',
-            'task.create',
-            'task.update',
-            'task.assign',
-        ]);
-
-        $user->givePermissionTo([
-            'task.view_own',
-            'task.update',
-        ]);
     }
 }

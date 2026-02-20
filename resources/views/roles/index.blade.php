@@ -39,16 +39,21 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $role->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $role->guard_name }}</td>
 
-                            {{-- تعديل: إضافة خلية عرض الصلاحيات --}}
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                            {{-- 1. تم حذف "whitespace-nowrap" من هنا --}}
+                        <td class="px-6 py-4 text-sm text-gray-700">
+                            {{-- 2. تمت إضافة هذا الـ div لينظم الشارات --}}
+                            <div class="flex flex-wrap gap-1">
                                 @forelse($role->permissions as $permission)
-                                    <span class="bg-green-200 text-green-800 px-2 py-1 m-1 rounded-full text-xs inline-block">
+                                    <span class="bg-green-200 text-green-800 px-2 py-1 m-1 rounded-full text-xs">
+                                        {{-- قمت بإزالة التكرار، كل صلاحية تظهر مرة واحدة --}}
                                         {{ $permission->name }}
                                     </span>
                                 @empty
                                     <span class="text-gray-500">لا توجد صلاحيات</span>
                                 @endforelse
-                            </td>
+                            </div>
+                        </td>
+
 
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="{{ route('roles.edit', $role->id) }}" class="text-blue-600 hover:text-blue-900 ml-3">تعديل</a>
