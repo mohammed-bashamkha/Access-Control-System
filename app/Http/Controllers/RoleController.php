@@ -2,26 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    use AuthorizesRequests;
     public function index()
     {
+      $this->authorize('viewAny', User::class);
       $roles = Role::with('permissions')->paginate(5);
       return view('roles.index',compact('roles'));
     }
 
     public function create()
     {
+      $this->authorize('create', User::class);
       $permissions = Permission::all();
       return view('roles.create',compact('permissions'));
     }
 
     public function store(Request $request)
     {
+      $this->authorize('create', User::class);
       $validated = $request->validate([
         'name' => 'required|string|unique:roles,name',
         'permissions' => 'array|nullable',
@@ -40,12 +46,14 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
+      $this->authorize('update', $role);
       $permissions = Permission::all();
       return view('roles.edit', compact('role', 'permissions'));
     }
 
     public function update(Request $request, Role $role)
     {
+      $this->authorize('update', $role);
       $validated = $request->validate([
         'name' => 'required|string|unique:roles,name,' . $role->id,
         'permissions' => 'array|nullable',
@@ -67,6 +75,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
+      $this->authorize('delete', $role);
       $role->delete();
       return redirect()->route('roles.index')->with('success', 'تم حذف الدور بنجاح.');
     }
